@@ -10,9 +10,77 @@
 </head>
 
 <body>
+  <!-- O display deve ser flex ou None -->
+  <section class="home" id="home">
+    <h1 class=" title">Pomodoro</h1>
+    <div class="config-pomodoro">
 
+      <div class="work">
+        <div class="arrow">
+          <div class="up">
+            &#129093
+          </div>
+          <div class="down">
+            &#129095
+          </div>
+        </div>
+        <div class="label"> 25 </div>
+        <span class="subtitle">Trabalho</span>
+      </div>
+
+      <div class="pause">
+        <div class="arrow">
+          <div class="up">
+            &#129093
+          </div>
+          <div class="down">
+            &#129095
+          </div>
+        </div>
+        <div class="label"> 5 </div>
+        <span class="subtitle">Pausa</span>
+      </div>
+
+      <div class="session">
+        <div class="arrow">
+          <div class="up">
+            &#129093
+          </div>
+          <div class="down">
+            &#129095
+          </div>
+        </div>
+        <div class="label"> 3 </div>
+        <span class="subtitle">Sessões</span>
+      </div>
+
+    </div>
+    <button class="button" id="continue">Continuar</button>
+  </section>
+  <section class="pomodoro" id="pomodoro" style="display: none;">
+    <div class="nav">
+      <h1 class="title">Pomodoro</h1>
+      <button class="button no-center" id="inicio">Início</button>
+    </div>
+    <div class="container-pomodoro">
+      <div class="clock">
+        <span class="time">25:00</span>
+      </div>
+      <div class="info-clock">
+        <h2 class="title-status">Trabalho</h2>
+        <ul class="session-status">
+          <li class="actived"></li>
+          <li class="actived"></li>
+          <li></li>
+        </ul>
+        <button class="button-action">
+          <span class="icone-triangle"></span>
+        </button>
+      </div>
+    </div>
+  </section>
 </body>
 
-<script src="js/script.js"></script>
+<script src=" js/script.js"></script>
 
 </html>
