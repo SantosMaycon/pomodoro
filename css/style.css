@@ -54,6 +54,7 @@ body {
 
 .up,
 .down {
+  user-select: none;
   cursor: pointer;
   background: #666c8b;
   width: 32px;
@@ -224,7 +225,7 @@ body {
 
 .time {
   position: absolute;
-  left: 28px;
+  left: 26px;
   top: 86px;
   font-weight: 900;
   font-size: 84px;

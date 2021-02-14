@@ -17,45 +17,45 @@
 
       <div class="work">
         <div class="arrow">
-          <div class="up">
+          <div class="up" id="work-up">
             &#129093
           </div>
-          <div class="down">
+          <div class="down" id="work-down">
             &#129095
           </div>
         </div>
-        <div class="label"> 25 </div>
-        <span class="subtitle">Trabalho</span>
-      </div>
-
-      <div class="pause">
-        <div class="arrow">
-          <div class="up">
-            &#129093
-          </div>
-          <div class="down">
-            &#129095
-          </div>
+        <div class="label" id="work""> 25 </div>
+        <span class=" subtitle">Trabalho</span>
         </div>
-        <div class="label"> 5 </div>
-        <span class="subtitle">Pausa</span>
-      </div>
 
-      <div class="session">
-        <div class="arrow">
-          <div class="up">
-            &#129093
+        <div class="pause">
+          <div class="arrow">
+            <div class="up" id="pause-up">
+              &#129093
+            </div>
+            <div class="down" id="pause-down">
+              &#129095
+            </div>
           </div>
-          <div class="down">
-            &#129095
-          </div>
+          <div class="label" id="pause"> 5 </div>
+          <span class="subtitle">Pausa</span>
         </div>
-        <div class="label"> 3 </div>
-        <span class="subtitle">Sessões</span>
-      </div>
 
-    </div>
-    <button class="button" id="continue">Continuar</button>
+        <div class="session">
+          <div class="arrow">
+            <div class="up" id="session-up">
+              &#129093
+            </div>
+            <div class="down" id="session-down">
+              &#129095
+            </div>
+          </div>
+          <div class="label" id="session"> 3 </div>
+          <span class="subtitle">Sessões</span>
+        </div>
+
+      </div>
+      <button class="button" id="continue">Continuar</button>
   </section>
   <section class="pomodoro" id="pomodoro" style="display: none;">
     <div class="nav">
@@ -64,7 +64,7 @@
     </div>
     <div class="container-pomodoro">
       <div class="clock">
-        <span class="time">25:00</span>
+        <span class="time" id="time">25:00</span>
       </div>
       <div class="info-clock">
         <h2 class="title-status">Trabalho</h2>
@@ -73,7 +73,7 @@
           <li class="actived"></li>
           <li></li>
         </ul>
-        <button class="button-action">
+        <button class="button-action" id="action">
           <span class="icone-triangle"></span>
         </button>
       </div>
