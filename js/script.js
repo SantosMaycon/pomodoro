@@ -42,12 +42,6 @@ sessionDown.addEventListener("click", () => {
     sessionLabel.innerText = Number(sessionLabel.innerText) - 1;
 });
 
-/* Get Time 🡇 */
-
-const timeLabel = document.querySelector("#time");
-let cronometro;
-let time;
-
 /* Navegation 🡇 */
 
 const btnContinue = document.querySelector("#continue");
@@ -55,68 +49,124 @@ const btnInicio = document.querySelector("#inicio");
 const home = document.querySelector("#home");
 const pomodoro = document.querySelector("#pomodoro");
 
-btnContinue.addEventListener("click", () => {
+let interval;
+let minute = +workLabel.innerText;
+let second = 0;
+let ok = true;
+let qtd;
+
+let statusWorking;
+
+function screenPomodoro() {
   home.style.display = "none";
   pomodoro.style.display = "block";
-  time = Number(workLabel.innerText);
-  timeLabel.innerText =
-    workLabel.innerText < 10
-      ? "0" + workLabel.innerText.replace(/\s/g, "") + ":00"
-      : workLabel.innerText.replace(/\s/g, "") + ":00";
-});
+  if (ok) {
+    console.log("Nº de Sessões:", (qtd = addSessionList() + 1));
+    ok = false;
+  }
+  statusWorking
+    ? ((minute = +workLabel.innerText),
+      workStyle(),
+      setTimeInTheClock(+workLabel.innerText))
+    : ((minute = +pauseLabel.innerText),
+      pauseStyle(),
+      setTimeInTheClock(+pauseLabel.innerText));
+  second = 0;
+}
 
-btnInicio.addEventListener("click", () => {
+function screenHome() {
   home.style.display = "flex";
   pomodoro.style.display = "none";
-  icone.classList = "icone-triangle";
-  time = 0;
-  currentSecond = 0;
-  currentMinute = null;
-  ok = null;
-  clearInterval(cronometro);
+  icone.className = "icone-triangle";
+  removeSessionList();
+  clearInterval(interval);
+  minute = 0;
+  second = 0;
+  ok = true;
+}
+
+btnContinue.addEventListener("click", () => {
+  statusWorking = true; //Não esta bonito isso aqui! Obs: Alterar isso depois
+  screenPomodoro();
 });
+btnInicio.addEventListener("click", screenHome);
 
-/* Play Time 🡇 */
+/* Set Time Config Work in Clock Time 🡇 */
 
+function setTimeInTheClock(minute, second = 00) {
+  const timeLabel = document.querySelector("#time");
+  timeLabel.innerText =
+    (minute < 10 ? `0${minute}` : minute) +
+    ":" +
+    (second < 10 ? `0${second}` : second);
+}
+
+/* Play Clock 🡇 */
 const action = document.querySelector("#action");
 const icone = action.querySelector("span");
-let currentMinute;
-let currentSecond = 0;
-let formatTimeLabel;
-let ok;
 
-action.addEventListener("click", () => {
-  if (!ok) {
-    ok = "ok";
-    currentMinute = time;
-  }
-
-  if (icone.className === "icone-triangle") {
-    icone.className = "icone-pause";
-    cronometro = setInterval(() => {
-      currentSecond--;
-      if (currentSecond < 0) {
-        if (currentMinute > 0) {
-          currentMinute--;
-          currentSecond = 59;
+function clock() {
+  if (qtd) {
+    if (icone.className === "icone-triangle") {
+      icone.className = "icone-pause";
+      interval = setInterval(() => {
+        second--;
+        if (second < 0) {
+          if (minute > 0) {
+            minute--;
+            second = 59;
+          }
         }
-      }
 
-      if (currentMinute === 0 && currentSecond === 0) {
-        clearInterval(cronometro);
-        icone.className = "icone-triangle";
-        ok = null;
-      }
+        if (minute === 0 && second === 0) {
+          icone.className = "icone-triangle";
+          clearInterval(interval);
+          setTimeout(() => {
+            statusWorking ? (statusWorking = false) : (statusWorking = true);
+            screenPomodoro();
+            qtd--;
+          }, 1500);
+        }
 
-      formatTimeLabel =
-        (currentMinute < 10 ? `0${currentMinute}` : currentMinute) +
-        ":" +
-        (currentSecond < 10 ? `0${currentSecond}` : currentSecond);
-
-      timeLabel.innerText = formatTimeLabel;
-    }, 1000);
-  } else if (icone.className === "icone-pause") {
-    icone.className = "icone-triangle";
-    clearInterval(cronometro);
+        setTimeInTheClock(minute, second);
+      }, 1000);
+    } else if (icone.className === "icone-pause") {
+      icone.className = "icone-triangle";
+      clearInterval(interval);
+    }
   }
-});
+}
+
+action.addEventListener("click", clock);
+
+/* Session 🡇 */
+
+const ulSession = document.querySelector("#list-session");
+
+function addSessionList() {
+  const session = Number(sessionLabel.innerText);
+  for (let i = 0; i < session; i++) {
+    ulSession.appendChild(document.createElement("li"));
+  }
+  return session;
+}
+
+function removeSessionList() {
+  ulSession.innerHTML = "";
+}
+
+/* Styles 🡇 */
+const title = document.querySelector("#title-status");
+const clockHTML = document.querySelector("#clock");
+
+function pauseStyle() {
+  title.innerText = "Pausa";
+  title.className = "title-status-pause";
+  clockHTML.className = "clock-pause";
+}
+
+function workStyle() {
+  title.innerText = "Trabalho";
+  title.className = "title-status";
+  clockHTML.className = "clock";
+}
