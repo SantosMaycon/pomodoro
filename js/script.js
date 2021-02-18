@@ -61,13 +61,14 @@ function screenPomodoro() {
   home.style.display = "none";
   pomodoro.style.display = "block";
   if (ok) {
-    console.log("Nº de Sessões:", (qtd = addSessionList() + 1));
+    console.log("Nº de Sessões:", (qtd = addSessionList() * 2 - 1));
     ok = false;
   }
   statusWorking
     ? ((minute = +workLabel.innerText),
       workStyle(),
-      setTimeInTheClock(+workLabel.innerText))
+      setTimeInTheClock(+workLabel.innerText),
+      addActivetedInLi())
     : ((minute = +pauseLabel.innerText),
       pauseStyle(),
       setTimeInTheClock(+pauseLabel.innerText));
@@ -121,11 +122,13 @@ function clock() {
         if (minute === 0 && second === 0) {
           icone.className = "icone-triangle";
           clearInterval(interval);
+          playAlert();
           setTimeout(() => {
             statusWorking ? (statusWorking = false) : (statusWorking = true);
-            screenPomodoro();
             qtd--;
-          }, 1500);
+            if (qtd === 0) setTimeInTheClock("Fim   ", ")");
+            else screenPomodoro();
+          }, 50);
         }
 
         setTimeInTheClock(minute, second);
@@ -155,18 +158,50 @@ function removeSessionList() {
   ulSession.innerHTML = "";
 }
 
+/* Add Checked Session 🡇 */
+
+function addActivetedInLi() {
+  let uniq = true;
+  const li = ulSession.querySelectorAll("li");
+  li.forEach((li) => {
+    if (uniq)
+      if (li.className === "") {
+        uniq = false;
+        li.className = "actived";
+      }
+  });
+}
+
 /* Styles 🡇 */
-const title = document.querySelector("#title-status");
-const clockHTML = document.querySelector("#clock");
+
+function setStylePomodoro(titleText, titleClass, clockClass, styleClass) {
+  const title = document.querySelector("#title-status");
+  const clockHTML = document.querySelector("#clock");
+  const li = ulSession.querySelectorAll("li");
+  title.innerText = titleText;
+  title.className = titleClass;
+  clockHTML.className = clockClass;
+  li.forEach((li) => {
+    if (li.className) li.className = styleClass;
+  });
+}
 
 function pauseStyle() {
-  title.innerText = "Pausa";
-  title.className = "title-status-pause";
-  clockHTML.className = "clock-pause";
+  setStylePomodoro(
+    "Pause",
+    "title-status-pause",
+    "clock-pause",
+    "actived-pause",
+  );
 }
 
 function workStyle() {
-  title.innerText = "Trabalho";
-  title.className = "title-status";
-  clockHTML.className = "clock";
+  setStylePomodoro("Trabalho", "title-status", "clock", "actived");
+}
+
+/* Add Alert Sound 🡇 */
+const audio = new Audio("assets/alert.mp3");
+
+function playAlert() {
+  audio.play();
 }
