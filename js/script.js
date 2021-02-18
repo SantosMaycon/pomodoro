@@ -54,6 +54,7 @@ let minute = +workLabel.innerText;
 let second = 0;
 let ok = true;
 let qtd;
+let end = true;
 
 let statusWorking;
 
@@ -79,11 +80,13 @@ function screenHome() {
   home.style.display = "flex";
   pomodoro.style.display = "none";
   icone.className = "icone-triangle";
+  document.title = "Pomodoro";
   removeSessionList();
   clearInterval(interval);
   minute = 0;
   second = 0;
   ok = true;
+  end = true;
 }
 
 btnContinue.addEventListener("click", () => {
@@ -100,6 +103,7 @@ function setTimeInTheClock(minute, second = 00) {
     (minute < 10 ? `0${minute}` : minute) +
     ":" +
     (second < 10 ? `0${second}` : second);
+  document.title = timeLabel.innerText + " | Pomodoro";
 }
 
 /* Play Clock 🡇 */
@@ -126,8 +130,13 @@ function clock() {
           setTimeout(() => {
             statusWorking ? (statusWorking = false) : (statusWorking = true);
             qtd--;
-            if (qtd === 0) setTimeInTheClock("Fim   ", ")");
-            else screenPomodoro();
+            if (qtd === 0) {
+              if (end) {
+                qtd++;
+                longPauseClock();
+                end = false;
+              }
+            } else screenPomodoro();
           }, 50);
         }
 
@@ -188,7 +197,7 @@ function setStylePomodoro(titleText, titleClass, clockClass, styleClass) {
 
 function pauseStyle() {
   setStylePomodoro(
-    "Pause",
+    "Pausa",
     "title-status-pause",
     "clock-pause",
     "actived-pause",
@@ -204,4 +213,17 @@ const audio = new Audio("assets/alert.mp3");
 
 function playAlert() {
   audio.play();
+}
+
+/* Long Pause 🡇 */
+
+function longPauseClock() {
+  setStylePomodoro(
+    "Pausa Final",
+    "title-status-long-pause",
+    "clock-long-pause",
+    "actived-long-pause",
+  );
+  minute = +pauseLabel.innerText * +sessionLabel.innerText;
+  setTimeInTheClock(minute);
 }
