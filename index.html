@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="notranslate" translate="no">
 
 <head>
   <meta charset="UTF-8">
+  <meta name="Description" content="A timer for your browser that incorporates the pomodoro technique">
+  <meta name="keywords" content="HTML, CSS, JavaScript, Pomodoro">
+  <meta name="author" content="Santos Maycon">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate" />
   <title>Pomodoro</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="assets/fav.png" type="image/x-icon">
@@ -19,45 +23,33 @@
 
       <div class="work">
         <div class="arrow">
-          <div class="up" id="work-up">
-            &#129093
-          </div>
-          <div class="down" id="work-down">
-            &#129095
-          </div>
+          <div class="up" id="work-up"></div>
+          <div class="down" id="work-down"></div>
         </div>
-        <div class="label" id="work""> 25 </div>
+        <div class="label" id="work"> 25 </div>
         <span class=" subtitle">Trabalho</span>
-        </div>
-
-        <div class="pause">
-          <div class="arrow">
-            <div class="up" id="pause-up">
-              &#129093
-            </div>
-            <div class="down" id="pause-down">
-              &#129095
-            </div>
-          </div>
-          <div class="label" id="pause"> 5 </div>
-          <span class="subtitle">Pausa</span>
-        </div>
-
-        <div class="session">
-          <div class="arrow">
-            <div class="up" id="session-up">
-              &#129093
-            </div>
-            <div class="down" id="session-down">
-              &#129095
-            </div>
-          </div>
-          <div class="label" id="session"> 3 </div>
-          <span class="subtitle">Sessões</span>
-        </div>
-
       </div>
-      <button class="button" id="continue">Continuar</button>
+
+      <div class="pause">
+        <div class="arrow">
+          <div class="up" id="pause-up"></div>
+          <div class="down" id="pause-down"></div>
+        </div>
+        <div class="label" id="pause"> 5 </div>
+        <span class="subtitle">Pausa</span>
+      </div>
+
+      <div class="session">
+        <div class="arrow">
+          <div class="up" id="session-up"></div>
+          <div class="down" id="session-down"></div>
+        </div>
+        <div class="label" id="session"> 3 </div>
+        <span class="subtitle">Sessões</span>
+      </div>
+
+    </div>
+    <button class="button" id="continue">Continuar</button>
   </section>
   <section class="pomodoro" id="pomodoro" style="display: none;">
     <div class="nav">
@@ -67,6 +59,7 @@
     <div class="container-pomodoro">
       <div class="clock" id="clock">
         <span class="time" id="time"></span>
+        <div class="cirlce-svg"></div>
       </div>
       <div class="info-clock">
         <h2 class="title-status" id="title-status">Trabalho</h2>
